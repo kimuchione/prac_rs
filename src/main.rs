@@ -1,53 +1,51 @@
 #[derive(Debug)]
-struct Food {
-    cost: u32,
-    food_type: FoodType,
+struct Animal {
+    age: u8,
+    name: String,
+    weight: u8,
+    is_healthy: bool,
 }
 
-#[derive(Debug)]
-enum FoodType {
-    Beef(String),
-    Vegi(String),
-    Sauce(String),
+struct AnimalDescription {
+    name: String,
+    is_healthy: bool,
 }
 
-impl Food {
-    fn new(cost: u32, food_type: FoodType) -> Self {
-        //constructor method
-        Self { cost, food_type }
-    }
+//destructuring
+impl AnimalDescription {
+    fn simple_initalization(input: Animal) -> Self {
+        let Animal {
+            name, is_healthy, ..
+        } = input;
 
-    fn print(&self) {
-        println!(
-            "It's {} won. Food type is {}",
-            self.cost,
-            self.food_type.call_name()
-        );
-    }
-
-    fn change_type(&mut self, change_type: FoodType) {
-        self.food_type = change_type;
-    }
-}
-
-//implements can place behind or front
-impl FoodType {
-    fn call_name(&self) -> &String {
-        match self {
-            FoodType::Beef(anything) => anything,
-            FoodType::Vegi(anything) => anything,
-            FoodType::Sauce(anything) => anything,
-        }
+        Self { name, is_healthy }
     }
 }
 
 fn main() {
-    let mut my_food = Food::new(10, FoodType::Vegi(String::from("Cucumber")));
-    my_food.print(); // == Food::print(&my_food) syntactic sugar
+    let my_pet = Animal {
+        age: 8,
+        name: "jjilong".to_string(),
+        weight: 12,
+        is_healthy: true,
+    };
 
-    my_food.change_type(FoodType::Beef(String::from("Pork")));
-    my_food.print();
+    //destructuring
+    let Animal {
+        age: a,
+        name: b,
+        weight: c,
+        is_healthy: d,
+    } = &my_pet;
 
-    my_food.change_type(FoodType::Sauce("Salsa".to_string()));
-    my_food.print();
+    println!(
+        "His name is {}. {} years old. and get weight {}, is healthy? {}",
+        b, a, c, d
+    );
+
+    let another_pet = AnimalDescription::simple_initalization(my_pet);
+    println!(
+        "His name is {}, is he healthy? {}",
+        another_pet.name, another_pet.is_healthy
+    );
 }
