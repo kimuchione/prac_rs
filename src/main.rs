@@ -1,20 +1,16 @@
-use std::fmt::Display;
-
-#[derive(Debug)]
-struct Book;
-
-fn return_func<T, U>(params: T, number1: U, number2: U)
-where
-    T: Display, // T is not keyword. If you want to write DisplayType? try it .
-    U: Display + std::cmp::PartialOrd, // If you worried about typing over you put in generics on where
-{
-    let is_greater = if number1 >= number2 { true } else { false };
-    println!(
-        "Hey {}, Is {} greater than {} ? {} ",
-        params, number1, number2, is_greater
-    );
+fn take_value(value: Vec<i32>) -> Option<i32> {
+    if value.len() < 5 {
+        None
+    } else {
+        Some(value[4]) //wrapped option<i32>
+    }
 }
 
 fn main() {
-    return_func("jiwon", 10, 5);
+    let first_vec = vec![1, 2, 3, 4, 5];
+    let index = take_value(first_vec); //Option.unwrap() take out what is inside to unwrap function
+    match index {
+        Some(number) => println!("The number is {}", number),
+        _ => println!("None"),
+    };
 }
