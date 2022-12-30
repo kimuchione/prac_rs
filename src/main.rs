@@ -1,16 +1,17 @@
-fn take_value(value: Vec<i32>) -> Option<i32> {
-    if value.len() < 5 {
-        None
+fn is_positive_number(input: i32) -> Result<i32, String> {
+    if input.is_positive() == true {
+        Ok(1)
     } else {
-        Some(value[4]) //wrapped option<i32>
+        Err("No".to_string())
     }
 }
 
 fn main() {
-    let first_vec = vec![1, 2, 3, 4, 5];
-    let index = take_value(first_vec); //Option.unwrap() take out what is inside to unwrap function
-    match index {
-        Some(number) => println!("The number is {}", number),
-        _ => println!("None"),
-    };
+    let mut result = Vec::new();
+
+    for n in -5..5 {
+        result.push(is_positive_number(n));
+    }
+
+    println!("{:?}", result);
 }
