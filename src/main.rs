@@ -1,18 +1,17 @@
-use std::vec;
-
 fn main() {
-    let weather = vec![
-        vec!["seoul", "sunny", "-4", "2"],
-        vec!["busan", "sunny", "1", "10"],
-    ];
+    use std::collections::HashMap;
 
-    for mut i in weather {
-        println!("{}", i[0]);
-        while let Some(result) = i.pop() {
-            //match의 모든 유효성 검사를 받을 필요가 없어짐
-            if let Ok(number) = result.parse::<i32>() {
-                println!("The number is {}", number);
-            }
-        }
+    let mut letters = HashMap::new();
+
+    for ch in "a short treatise on fungi".chars() {
+        letters
+            .entry(ch)
+            .and_modify(|counter| *counter += 1)
+            .or_insert(1);
     }
+
+    assert_eq!(letters[&'s'], 2);
+    assert_eq!(letters[&'t'], 3);
+    assert_eq!(letters[&'u'], 1);
+    assert_eq!(letters.get(&'y'), None);
 }
