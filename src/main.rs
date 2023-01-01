@@ -1,17 +1,18 @@
-fn is_positive_number(input: i32) -> Result<i32, String> {
-    if input.is_positive() == true {
-        Ok(1)
-    } else {
-        Err("No".to_string())
-    }
-}
+use std::vec;
 
 fn main() {
-    let mut result = Vec::new();
+    let weather = vec![
+        vec!["seoul", "sunny", "-4", "2"],
+        vec!["busan", "sunny", "1", "10"],
+    ];
 
-    for n in -5..5 {
-        result.push(is_positive_number(n));
+    for mut i in weather {
+        println!("{}", i[0]);
+        while let Some(result) = i.pop() {
+            //match의 모든 유효성 검사를 받을 필요가 없어짐
+            if let Ok(number) = result.parse::<i32>() {
+                println!("The number is {}", number);
+            }
+        }
     }
-
-    println!("{:?}", result);
 }
