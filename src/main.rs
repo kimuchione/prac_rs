@@ -1,17 +1,19 @@
+use std::num::ParseIntError;
+
+fn parse_str(input: &str) -> Result<i32, ParseIntError> {
+    let parsed_number = input.parse::<i32>()?; //if parse failed then will be return ParseIntError
+    Ok(parsed_number)
+}
+
+// It looks like optional chaining in javascript but js return only undefined. (too hard search debug selection)
+// fn parse_str(inputL: &str) -> Result<(), ParseIntError> {
+// let parsed_number = input.parse::<i32>()?;  ==> question mark operatror can use only return Result type
+// println!("{}",parsed_number);
+// Ok(())
+// }
+
 fn main() {
-    use std::collections::HashMap;
-
-    let mut letters = HashMap::new();
-
-    for ch in "a short treatise on fungi".chars() {
-        letters
-            .entry(ch)
-            .and_modify(|counter| *counter += 1)
-            .or_insert(1);
+    for val in vec!["five", "8", "9.0", "four"] {
+        println!("{:?}", parse_str(val));
     }
-
-    assert_eq!(letters[&'s'], 2);
-    assert_eq!(letters[&'t'], 3);
-    assert_eq!(letters[&'u'], 1);
-    assert_eq!(letters.get(&'y'), None);
 }
