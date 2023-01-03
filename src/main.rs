@@ -1,19 +1,37 @@
-use std::num::ParseIntError;
-
-fn parse_str(input: &str) -> Result<i32, ParseIntError> {
-    let parsed_number = input.parse::<i32>()?; //if parse failed then will be return ParseIntError
-    Ok(parsed_number)
+#[derive(Debug)]
+struct Human<'a> {
+    is_man: bool,
+    name: &'a str,
 }
 
-// It looks like optional chaining in javascript but js return only undefined. (too hard search debug selection)
-// fn parse_str(inputL: &str) -> Result<(), ParseIntError> {
-// let parsed_number = input.parse::<i32>()?;  ==> question mark operatror can use only return Result type
-// println!("{}",parsed_number);
-// Ok(())
-// }
+trait Act {
+    //trait type is seems like prototype method in js.
+    fn say_hello(&self) {
+        println!("Hello!");
+    }
+    fn say_bye(&self) {
+        println!("Bye!");
+    }
+}
+
+impl<'a> Act for Human<'a> {
+    //declare lifetime and implement specific struct have no built-in function
+    fn say_hello(&self) {
+        println!("Hello {}", self.name);
+    }
+    fn say_bye(&self) {
+        println!("Bye {}", self.name);
+    }
+}
 
 fn main() {
-    for val in vec!["five", "8", "9.0", "four"] {
-        println!("{:?}", parse_str(val));
-    }
+    let man = Human {
+        is_man: true,
+        name: "peter",
+    };
+    man.say_hello();
+    man.say_bye();
+
+    assert_eq!(man.say_hello(), println!("Hello peter"));
+    assert_eq!(man.say_bye(), println!("Bye peter"));
 }
