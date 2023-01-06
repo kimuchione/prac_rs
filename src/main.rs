@@ -1,37 +1,38 @@
 #[derive(Debug)]
-struct Human<'a> {
+struct Human {
     is_man: bool,
-    name: &'a str,
+    age: u8,
+}
+#[derive(Debug)]
+struct State {
+    population: Vec<Human>,
 }
 
-trait Act {
-    //trait type is seems like prototype method in js.
-    fn say_hello(&self) {
-        println!("Hello!");
+impl Human {
+    fn new(is_man: bool, age: u8) -> Self {
+        Self { is_man, age }
     }
-    fn say_bye(&self) {
-        println!("Bye!");
+}
+//implement From and you can also use into function
+impl From<Vec<Human>> for State {
+    fn from(value: Vec<Human>) -> Self {
+        Self { population: value }
     }
 }
 
-impl<'a> Act for Human<'a> {
-    //declare lifetime and implement specific struct have no built-in function
-    fn say_hello(&self) {
-        println!("Hello {}", self.name);
-    }
-    fn say_bye(&self) {
-        println!("Bye {}", self.name);
+impl State {
+    fn print_age(&self) {
+        for human in &self.population {
+            println!("{}", human.age);
+        }
     }
 }
 
 fn main() {
-    let man = Human {
-        is_man: true,
-        name: "peter",
-    };
-    man.say_hello();
-    man.say_bye();
+    let windy = Human::new(true, 8);
+    let andy = Human::new(true, 10);
+    let annie = Human::new(false, 12);
 
-    assert_eq!(man.say_hello(), println!("Hello peter"));
-    assert_eq!(man.say_bye(), println!("Bye peter"));
+    let maple_town = State::from(vec![windy, andy, annie]);
+    maple_town.print_age();
 }
