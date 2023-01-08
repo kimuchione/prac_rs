@@ -1,38 +1,20 @@
-#[derive(Debug)]
-struct Human {
-    is_man: bool,
-    age: u8,
-}
-#[derive(Debug)]
-struct State {
-    population: Vec<Human>,
-}
-
-impl Human {
-    fn new(is_man: bool, age: u8) -> Self {
-        Self { is_man, age }
-    }
-}
-//implement From and you can also use into function
-impl From<Vec<Human>> for State {
-    fn from(value: Vec<Human>) -> Self {
-        Self { population: value }
+trait display_state {
+    fn to_string(&self) {
+        println!("status window");
     }
 }
 
-impl State {
-    fn print_age(&self) {
-        for human in &self.population {
-            println!("{}", human.age);
-        }
-    }
-}
-
+struct Jerry {}
+struct Tom {}
+//implement all type. if exist built-in function you must annotate what you use.
+impl<T> display_state for T {}
 fn main() {
-    let windy = Human::new(true, 8);
-    let andy = Human::new(true, 10);
-    let annie = Human::new(false, 12);
+    let mouse = Jerry {};
+    let cat = Tom {};
+    mouse.to_string();
+    cat.to_string();
+    let something_string = "hello".to_string();
 
-    let maple_town = State::from(vec![windy, andy, annie]);
-    maple_town.print_age();
+    //instead of ToString::to_string trait
+    display_state::to_string(&something_string); // candidate #2
 }
